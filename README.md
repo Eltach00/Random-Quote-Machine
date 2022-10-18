@@ -1,3 +1,3 @@
 # Random-Quote-Machine
-#By Eltadzh Guliev
+# By Eltadzh Guliev
 version for view
