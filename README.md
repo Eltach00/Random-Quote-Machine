@@ -1,2 +1,3 @@
 # Random-Quote-Machine
-for view
+#By Eltadzh Guliev
+version for view
