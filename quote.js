@@ -11,64 +11,86 @@ const colors = [
   '#BDBB99',
   '#77B1A9',
   '#73A857',
-];
+]
 
 class Quote {
-  element;
-  data;
+  element
+  data
 
   constructor() {
-    this.render();
-    this.eventBtn();
+    this.render()
+    this.eventBtn()
+    const randomColor = this.getRandomInteger(0, colors.length - 1)
+    this.styleText = `background-color: ${colors[randomColor]};
+    transition: background-color 1000ms linear;`
+    this.url = new URL(`https://twitter.com/intent/tweet`)
+    this.url.searchParams.set('hashtags', 'quotes')
+    this.url.searchParams.set('related', 'freecodecamp')
   }
 
   async render() {
     if (!this.data) {
-      await this.getQuotes();
+      await this.getQuotes()
     }
-    this.randomQuote = this.getRandomInteger(0, this.data.length - 1);
-    const div = document.createElement('div');
+    this.randomQuote = this.getRandomInteger(0, this.data.length - 1)
+    const div = document.createElement('div')
 
     div.innerHTML = `
-        <div id='text' >  <i id='font' class="fa fa-quote-left"> </i><span id='sp'>${
-          this.data[this.randomQuote].quote
-        }</span>
-        <div id='author' class='author'>-${this.data[this.randomQuote].author}</div>
+      <div id='text' >  <i id='font' class="fa fa-quote-left"> </i><span id='sp'>${
+        this.data[this.randomQuote].quote
+      }</span>
+      <div id='author' class='author'>-${
+        this.data[this.randomQuote].author
+      }</div>
+      <a
+      id='twit'
+      type="button"
+      class='twit'
+      href=''
+      title="Tweet this quote!"
+    >
+      Twitter
+    </a>
+      <button id="btn" class="btn" data-type="btn">New Quote</button>
+      </div>
+      `
 
-        </div>
-        
-        `;
-
-    this.element = div.firstElementChild;
-    this.element.classList.add('text');
-    document.getElementById('box').append(this.element);
-    this.changeColor();
+    this.element = div.firstElementChild
+    this.element.classList.add('text')
+    document.getElementById('box').append(this.element)
+    this.changeColor()
   }
 
   changeColor() {
-    const randomColor = this.getRandomInteger(0, colors.length - 1);
-    const container = document.getElementById('container');
+    const container = document.getElementById('container')
 
-    container.style.cssText = `    background-color: ${colors[randomColor]};
-                                         transition: background-color 1000ms linear;`;
+    container.style.cssText = this.styleText
 
     const text = document.getElementById('text')
     setTimeout(() => {
-        text.classList.add('change')
-    }, 300); 
+      text.classList.add('change')
+    }, 300)
 
+    const anchor = document.getElementById('twit')
+    this.url.searchParams.set(
+      'text',
+      `'${this.data[this.randomQuote].quote}' ${
+        this.data[this.randomQuote].author
+      }`
+    )
+    anchor.href = this.url
+    anchor.style.cssText = this.styleText
 
-    const btn = document.getElementById('btn');
-    btn.style.cssText = `    background-color: ${colors[randomColor]};
-                                transition: background-color 1000ms linear;`;
+    const btn = document.getElementById('btn')
+    btn.style.cssText = this.styleText
   }
 
   async getQuotes() {
     const response = await fetch(
       'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json'
-    );
-    const json = await response.json();
-    this.data = json.quotes;
+    )
+    const json = await response.json()
+    this.data = json.quotes
   }
 
   eventBtn() {
@@ -77,25 +99,22 @@ class Quote {
         const text = document.getElementById('text')
 
         text.classList.remove('change')
-    
 
         setTimeout(() => {
-            this.element.remove();
-        this.render();
-
-        }, 1000); 
-        
-
+          this.element.remove()
+          this.render()
+        }, 1000)
       }
-    };
-    document.addEventListener('click', this.makeNewQuote);
+    }
+    document.addEventListener('click', this.makeNewQuote)
   }
 
   getRandomInteger(min, max) {
     // случайное число от min до (max+1)
-    let rand = min + Math.random() * (max + 1 - min);
-    return Math.floor(rand);
+    let rand = min + Math.random() * (max + 1 - min)
+    return Math.floor(rand)
   }
 }
+
 
 window.quotes = new Quote()
