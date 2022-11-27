@@ -20,9 +20,7 @@ class Quote {
   constructor() {
     this.render()
     this.eventBtn()
-    const randomColor = this.getRandomInteger(0, colors.length - 1)
-    this.styleText = `background-color: ${colors[randomColor]};
-    transition: background-color 1000ms linear;`
+
     this.url = new URL(`https://twitter.com/intent/tweet`)
     this.url.searchParams.set('hashtags', 'quotes')
     this.url.searchParams.set('related', 'freecodecamp')
@@ -62,6 +60,9 @@ class Quote {
   }
 
   changeColor() {
+    const randomColor = this.getRandomInteger(0, colors.length - 1)
+    this.styleText = `background-color: ${colors[randomColor]};
+    transition: background-color 1000ms linear;`
     const container = document.getElementById('container')
 
     container.style.cssText = this.styleText
@@ -94,21 +95,20 @@ class Quote {
   }
 
   eventBtn() {
-    this.makeNewQuote = (event) => {
-      if (event.target.dataset.type === 'btn') {
-        const text = document.getElementById('text')
-
-        text.classList.remove('change')
-
-        setTimeout(() => {
-          this.element.remove()
-          this.render()
-        }, 1000)
-      }
-    }
     document.addEventListener('click', this.makeNewQuote)
   }
 
+  makeNewQuote = (event) => {
+    if (event.target.dataset.type === 'btn') {
+      const text = document.getElementById('text')
+
+      text.classList.remove('change')
+      setTimeout(() => {
+        this.element.remove()
+        this.render()
+      }, 1000)
+    }
+  }
   getRandomInteger(min, max) {
     // случайное число от min до (max+1)
     let rand = min + Math.random() * (max + 1 - min)
@@ -116,5 +116,4 @@ class Quote {
   }
 }
 
-
-window.quotes = new Quote()
+new Quote()
