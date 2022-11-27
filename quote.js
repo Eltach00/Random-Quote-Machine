@@ -47,7 +47,7 @@ class Quote {
       href=''
       title="Tweet this quote!"
     >
-      Twitter
+      <i class="fa fa-twitter"></i>
     </a>
       <button id="btn" class="btn" data-type="btn">New Quote</button>
       </div>
