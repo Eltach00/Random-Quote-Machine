@@ -72,4 +72,21 @@ body {
     opacity: .9;
 }
 
+.twit {
+  padding: 8px 15px;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.twit:hover {
+  opacity: 0.9;
+}
+
 
